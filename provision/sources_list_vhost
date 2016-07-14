@@ -1,0 +1,5 @@
+deb http://de.archive.ubuntu.com/ubuntu trusty main universe multiverse
+deb http://de.archive.ubuntu.com/ubuntu trusty-updates main universe multiverse
+deb http://de.archive.ubuntu.com/ubuntu trusty-security main universe multiverse
+deb http://cran.rstudio.com/bin/linux/ubuntu trusty/
+deb http://debian.charite.de/ubuntu trusty-backports main restricted universe

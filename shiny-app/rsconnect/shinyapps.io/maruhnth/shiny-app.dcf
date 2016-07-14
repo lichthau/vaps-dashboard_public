@@ -1,0 +1,9 @@
+name: shiny-app
+account: maruhnth
+server: shinyapps.io
+appId: 114446
+bundleId: 504990
+url: https://maruhnth.shinyapps.io/shiny-app/
+when: 1468513099.17886
+asMultiple: FALSE
+asStatic: FALSE

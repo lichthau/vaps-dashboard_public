@@ -1,0 +1,143 @@
+/* 
+set standard font
+*/
+* {
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+/* 
+heading
+*/
+h1 {
+  color: #036 !important;
+  font-family: Verdana,Helvetica,Arial,sans-serif
+  !important
+}
+
+/* 
+moving heading to the right
+*/
+h1 {
+  margin: 0.67em 100px;
+}
+/*
+body {
+  background-image: url(../img/hukombi_bbw.jpg), url(../img/uni3b_eingang_goroncy.jpg);
+  background-position: 960px 25px, 523px 25px;
+  background-repeat: no-repeat; 
+  background-size: 35%, 25%;
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-top: 50px;
+}
+*/
+
+/* 
+set color of a tag in body, i.e., links to other tabs
+*/
+body a {
+  color: white;
+}
+
+footer a {
+  position: relative;
+  bottom: -150px;
+  left: 2%;
+  padding-left: 15px;
+  padding-bottom: 15px;
+  color: #069;
+}
+
+
+/* 
+when hovering over tabs in body
+*/
+body a:hover {
+  color: #036;
+}
+
+/* 
+when clicking on tab
+*/
+body a:focus {
+  color: #036;
+}
+
+/* 
+main tab
+*/
+.col-sm-8 {
+  background-color: white;
+}
+
+/* 
+sidebar tab
+*/
+.col-sm-4 {
+  background-color: white;
+}
+
+/* 
+box inside sidebar tab
+*/
+.well {
+  background-color: #CC9;
+  border: 1px solid #CC9;
+  box-shadow: none;
+  color: #036 !important;
+  font-family: Verdana,Helvetica,Arial,sans-serif
+}
+
+/* 
+nav tab
+*/
+.nav-tabs {
+  border-bottom: 1px solid #036;
+  border-top: 1px solid #036;
+}
+
+/* 
+active nav tab
+*/
+.nav-tabs > li.active > a {
+  border: 1px solid #036;
+  background-color: #FFF;
+  color: #036;
+}
+
+.nav-tabs {
+  background-color: #036;
+  color: #FFF;
+}
+
+/* 
+set inactive variable text in dropdown to blue
+*/
+.selectize-dropdown {
+  font-family: sans-serif;
+  color: #036 !important;
+}
+
+.selectize-input {
+  color: #036 !important;
+}
+
+/* 
+year slider in sidebar elements
+*/
+
+.irs-from, .irs-to, .irs-bar, .irs-slider {
+  background: #036 !important;
+}
+
+.irs-bar, .irs-slider {
+  border-top: #036 !important;
+  border-bottom: #036 !important;
+}
+
+/* 
+text in data table
+*/
+body table.data {
+  color: black;
+}
