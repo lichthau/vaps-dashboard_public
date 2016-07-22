@@ -6,16 +6,24 @@
 ### Data:   June 22, 2016
 ### produced under R version 3.2.3
 
-## Only for first run in R-session, source script that gets data from server 
-# source("../databaseAccessHauke.R")
+library(shiny)
+library(DT)
+library(R.cache)
 
-# define working directory
-path <- setwd("~/Documents/Humboldt/Electoral_Vulnerability/Projects/vaps-dashboard_public/datatable_tabs")
-if ( sub(".*/","",getwd()) != "datatable_tabs" ) setwd(path) ## set path to vaps-dashboard_public here ##
-rm(path)
+# IMPORTANT: Set working directory to vaps-dashboard_public folder first
+setwd("/Users/lichthau/Documents/Humboldt/Electoral_Vulnerability/Projects/vaps-dashboard_public")
 
-if (!require(shiny)) install.packages("shiny")
-if (!require(DT)) install.packages("DT")
+if ( sub(".*/","",getwd()) == "vaps-dashboard_public" ) {
+  
+  setCacheRootPath(path=getwd()) 
+  # load cached data list
+  allPCDBObjects <- loadCache(key=list("PCDB","data"))   # key is PCDB + data
+  # retrieve data from list
+   for ( o in seq_along(allPCDBObjects) ) { seq_along(allPCDBObjects)
+     assign(names(allPCDBObjects)[ o ], allPCDBObjects[[ o ]])
+   }; rm(o)
+  # ... and there we go        
+} else warning("Cannot load cached data. Please setwd() to vaps-dashboard_public directory!")
 
 # Prerequisites: 
   

@@ -8,6 +8,8 @@
 
 if (!require(RPostgreSQL)) install.packages("RPostgreSQL")
 if (!require(dplyr)) install.packages("dplyr")
+if (!require(countrycode)) install.packages("countrycode")
+if (!require(R.cache)) install.packages("R.cache")
 
 path <- "~/Documents/Humboldt/Electoral_Vulnerability/Projects/vaps-dashboard_public"
 if ( sub(".*/","",getwd()) != "vaps-dashboard_public" ) setwd(path) ## set path to vaps-dashboard_public here ##
@@ -65,7 +67,6 @@ rm(path)
   rm(con)
   
 # (3) Create list with all countries in PCDB for selector-input choice 
-  require(countrycode)
   # get country ISO-character codes
   countrySelectorList <- rbind( "All" , country[,c("ctr_ccode2","ctr_ccode")] )  
   # use countrycode package to asign country names to all but first row names
@@ -109,6 +110,17 @@ rm(path)
     all(TRUE== ( colnames(ccv) %in% ccv_labs ) )  # check: works
     # clean up
     rm(list=(ls()[grepl("ccv.*",ls())]))
+
+  #   
+    allPCDBObjects <- lapply(ls(.GlobalEnv, all.names = F), function(o) get(o, envir = .GlobalEnv)) 
+
+    names(allPCDBObjects) <- ls(.GlobalEnv, all.names = F)[!grepl("allPCDBObjects",ls())]
+    class(allPCDBObjects)
+    str(allPCDBObjects)
+
+    if ( sub(".*/","",getwd()) == "vaps-dashboard_public" ) {
+      setCacheRootPath(path=getwd()) 
+      saveCache(allPCDBObjects, key=list("PCDB","data"))   
+    } else warning("Cannot cache list. Please setwd() or setCacheRootPath() to vaps-dashboard_public directory!")
+    rm(allPCDBObjects)
     
-    
-  
