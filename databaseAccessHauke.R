@@ -3,13 +3,15 @@
 ###          and create lists with variable codes and descriptive labels
 ###
 ### Author: Hauke Licht
-### Data:   June 21, 2016
+### Data:   June 22, 2016
 ### produced under R version 3.2.3
 
 if (!require(RPostgreSQL)) install.packages("RPostgreSQL")
 if (!require(dplyr)) install.packages("dplyr")
 
-if ( !grepl(".*/vaps-dashboard_public",getwd()) ) setwd("vaps-dashboard_public") ## set path to vaps-dashboard_public here ##
+path <- "~/Documents/Humboldt/Electoral_Vulnerability/Projects/vaps-dashboard_public"
+if ( sub(".*/","",getwd()) != "vaps-dashboard_public" ) setwd(path) ## set path to vaps-dashboard_public here ##
+rm(path)
 
 # (1) Connect to Database
 
@@ -47,11 +49,12 @@ if ( !grepl(".*/vaps-dashboard_public",getwd()) ) setwd("vaps-dashboard_public")
   ColumnsInViews <- dbGetQuery(con,"SELECT table_catalog, table_schema, table_name, column_name, ordinal_position, data_type 
                         FROM information_schema.columns
                                 WHERE table_schema = 'beta_version'
-                                AND table_name LIKE 'view_%';")
+                                AND table_name LIKE '%view_%';")
   head(ColumnsInViews)
   # list views ...
   VIEWS <-  sort(unique(ColumnsInViews$table_name))
-    
+  VIEWS <-  VIEWS[!grepl("matview",VIEWS)] 
+  
     # ... and read Views in beta_version schema into dataframes 
     for (i in 1:length(VIEWS)) {
       assign(gsub("../shiny-experiments/view_configuration_vto","vto",VIEWS)[i], dbReadTable(con, c("beta_version",VIEWS[i])))
@@ -64,17 +67,17 @@ if ( !grepl(".*/vaps-dashboard_public",getwd()) ) setwd("vaps-dashboard_public")
 # (3) Create list with all countries in PCDB for selector-input choice 
   require(countrycode)
   # get country ISO-character codes
-  country_selector_list <- rbind( "All" , country[,c("ctr_ccode2","ctr_ccode")] )  
+  countrySelectorList <- rbind( "All" , country[,c("ctr_ccode2","ctr_ccode")] )  
   # use countrycode package to asign country names to all but first row names
-  rownames(country_selector_list)[-1] <- countrycode(country_selector_list[-1,1],"iso2c","country.name") 
+  rownames(countrySelectorList)[-1] <- countrycode(countrySelectorList[-1,1],"iso2c","country.name") 
   # name first row manually
-  rownames(country_selector_list)[1] <- "All countries"
+  rownames(countrySelectorList)[1] <- "All countries"
   # define as list with country names as first-dimension names, and ISO-3-character codes as elements
-  country_selector_list <- as.list( apply(country_selector_list[], 1,  function( e ) e = e[2]) )
+  countrySelectorList <- as.list( apply(countrySelectorList[], 1,  function( e ) e = e[2]) )
 
 # (4) Create list with column-label lists for later labeling of input-selector choices
   # load dataframe with all codes and descriptive labels  
-  AbbrLabs <- read.csv("../shiny-experiments/AbbrLabs.csv",sep=",")[,c("abbr","label")]
+  AbbrLabs <- read.csv("AbbrLabs.csv",sep=",")[,c("abbr","label")]
    
   # create empty list
   colLabsList <- list()
@@ -96,9 +99,12 @@ if ( !grepl(".*/vaps-dashboard_public",getwd()) ) setwd("vaps-dashboard_public")
     colLabsList$country[colLabsList$country %in% colnames(country)[1:4] ]
 
     # or for the columns of a merge of the country table with the cabinet table
-    ccv <- right_join(country[,1:4],cabinet,by="ctr_id",type="right")
-    ccv_labs <- append(colLabsList$country[colLabsList$country %in% colnames(country)[1:4] ], colLabsList$cabinet )
-    # NOTE that by default duplicate list elements (e.g, 'Country identifier (ctr_id)' appears in both lists) are only represented once
+    ccv <- merge(country[,1:4],cabinet,by="ctr_id",type="right")
+    ccv_labs <- append(colLabsList$country [colLabsList$country %in% colnames(country)[1:4] ], 
+                       colLabsList$cabinet[ -grep("ctr_id",colLabsList$cabinet) ] ) 
+    # NOTE that by default elements that occur in both lists, i.e., are duplicated
+    # (e.g, 'Country identifier (ctr_id)' appears in both lists) are only represented once
+    ccv_labs
     
     all(TRUE== ( colnames(ccv) %in% ccv_labs ) )  # check: works
     # clean up
