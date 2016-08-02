@@ -1,0 +1,174 @@
+Tables in the config_data scheme
+
+
+
+### Configuration events
+Configuration Events 
+
+The configuration events data table sequences changes in the political-institutional configurations of a country by start date.
+A new political configuration is recorded when one of the following changes occurs:
+
+- a change in cabinet composition (rows in Cabinet table, denoted by cabinet ID)
+- a change in lower house composition (rows in Lower House table , denoted by lower house ID)
+- a change in upper house composition, if an upper house exists in country's political system (rows in Upper House table,
+  denoted by upper house ID)
+- a change in presidency, if president exists in country's political system (rows in table Presidential Election, identified
+  by variable presidential election ID)
+- a change in a veto institutions constitutional entitlment of veto rights (i.e., change in veto power of one out of seven veto
+  institutions recorded per country in Veto Points table)
+
+
+
+### Country?
+
+
+
+### Cabinet
+Cabinet 
+
+The cabinet data table contains information on cabinet configurations.
+A new cabinet is enlisted if one of the following events took place:
+
+- a change in coalition composition at the party-level.
+- a change in head of government.
+- a new government formation after general legislative elections (not in presidential systems).
+
+
+
+### Cabinet Portfolios
+Cabinet Portfolios
+
+The cabinet portfolios data table provides information on parties in cabinets.
+As cabinet portfolio we define the composition of a cabinet at the party-level. New portfolios
+are included whenever a new cabinet emerges (cf. Cabinet data). It means:
+
+- a change in coalition composition at the party-level.
+- a change in head of government.
+- a new government formation after general legislative elections (not in presidential systems).
+
+
+
+### Lower House
+Lower House 
+
+The lower house data table provides information on lower houses. Rows are compositions of lower
+houses, denoted by a lower house identifier (lh_id). A new lower house configuration is included when:
+
+- a change in seat composition through legislative elections,
+- a change in seat composition mergers or splits in factions during the legislature.
+
+When enlistment is due to the latter event, no lower house election identifier (lhelc_id) is recorded.
+Otherwise, each lower house corresponds to a lower house election.
+
+
+
+### Lower House Election
+Lower House Election 
+
+The lower house election data table provides information on lower house elections. Rows are lower house
+elections, uniquely  identified by lower house election identifier (lhelc_id).
+It is noteworthy that each lower house election corresponds
+to a lower house configuration (see lower house data).
+
+
+
+### Lower House Vote Results
+Lower House Vote Results
+
+The lower house vote results data table contains data on the distribution of votes in the lower house at the
+party-level. Rows are the parties, denoted by a party identifier (pty_id), and their respective vote
+results in a given lower house election, denoted by a lower house identifier (lh_id).
+
+
+
+### Lower House Seat Results
+Lower House Seat Results
+
+The lower house seat results data tabel contains data on the distribution of seats in the lower house at the
+party-level. Rows are parties, denoted by a party identifier (pty_id), and their respective vote
+results in a given lower house election (lh_id).
+
+
+
+### Upper House
+Upper House
+
+The upper house data table provides general information on upper houses. Rows are compositions of upper houses, denoted by
+an upper house identifier (uh_id) as well as a unique combinations of country ID (ctr_id) and start date (uh_sdate).
+A new upper house composition is included when:
+
+-- a change in the composition through legislative elections,
+-- a change in the composition through mergers or splits in factions during the legislature.
+
+Information is only provided for countries with bicameral systems.
+
+
+
+### Upper House Election
+Upper House Election
+
+The upper house election data table includes information on upper house elections. Rows report úpper 
+house elections, denoted by an upper house elction identifier (uhelc_id) as well as a unique combinations of 
+country ID (ctr_id) and election date (uhelc_date).
+
+Information is only provided for countries with bicameral systems.
+
+
+
+### Upper House Seat Results
+Upper House Seat Results
+
+The upper house seat results data table compiles data on the seat composition in upper houses at the party-level.
+Rows are parties, denoted by party identifier (pty_id), and their respective seat results in a given upper house (uh_id).
+
+Information is only provided for countries with bicameral systems.
+
+
+
+### Presidential Election
+Presidential Electiion
+
+The presidential election data table contains general information on presidential elections. Rows are presidential elections,
+denoted by an identifier (prselc_id) as well as a unique combinations of country ID (ctr_id) and election data (prselc_date.)
+
+
+### Presidential Election Vote Results
+Presidential Election Vote Results
+
+The presidential election vote results data table provides data on vote results in presidential elections at the candidate-level.
+Rows are the candidates running in (the multiple rounds of) an election, denoted by an identifier (prsvres_id) as well as a unique 
+combinations of presidential election ID (prselc_id), election round (prselc_rnd) and a candidate's party (prselc_cnd_pty).
+
+
+
+### Veto Points
+Veto Points
+
+The veto points data table contains information on potential veto points in a country’s political
+system, including the type of institution and the time period of its existence as a veto point.
+Rows are a country's different institutions, denoted by an identifier (vto_id) as well as a unique combination
+of country ID (ctr_id), institution's type (vto_inst_typ) and start date (vto_inst_sdate).
+
+
+
+### Party
+Party
+
+The party data table provides general information on parties. Rows are parties within countries, denoted by a unique
+combinations of country ID (ctr_id) and a party identifier (pty_id).
+
+
+
+### Electoral Alliances
+Electoral Aliiances
+
+The electoral alliances data table provides information on electoral alliances, indicating
+parties forming an electoral alliance. Parties listed in the party data table that are
+recorded as electoral alliances are listed in with their respective party ID (pty_id).
+Parties that constitute an electoral alliance are enumerated by a counter (pty_eal_nbr).
+There occur as many rows for each electoral alliance as stated by the counter.
+The elctoral alliance identifier (pty_eal_id), records the party IDs of parties forming an electoral
+alliance. Combinations of electoral alliance pty_eal_id) and enumerator of party
+in electoral alliance (pty_eal_nbr) are unique within countries.
+
+
