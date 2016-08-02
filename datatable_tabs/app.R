@@ -10,8 +10,8 @@ library(shiny)
 library(DT)
 library(R.cache)
 
-# IMPORTANT: Set working directory to vaps-dashboard_public folder first
-setwd("/Users/lichthau/Documents/Humboldt/Electoral_Vulnerability/Projects/vaps-dashboard_public")
+# IMPORTANT: Set working directory to local 'vaps-dashboard_public' directory first
+setwd("~/Documents/Humboldt/Electoral_Vulnerability/Projects/vaps-dashboard_public")
 
 if ( sub(".*/","",getwd()) == "vaps-dashboard_public" ) {
   
@@ -53,7 +53,9 @@ ui <- fluidPage(
 #     title = "Configuration Events Data",
 #     tabPanel(  # defintion of 1st tabPanel
       sidebarLayout(  # sidebarLayout defintion
+        
         sidebarPanel(  # sidebarPanel definition
+          
               tags$h2("Configuration Events Data"),
                 tags$hr(),
                 tags$h4("The configuration events data table sequences changes in the political-institutional configurations of a country by start date."),

@@ -2,16 +2,23 @@
 ### Title:  Access PCDB on HU-server, read data from tables and view,
 ###          and create lists with variable codes and descriptive labels
 ###
-### Author: Hauke Licht
-### Data:   June 22, 2016
+### Author: Hauke Licht (HL)
+### Date:   August 1, 2016
 ### produced under R version 3.2.3
 
-if (!require(RPostgreSQL)) install.packages("RPostgreSQL")
-if (!require(dplyr)) install.packages("dplyr")
-if (!require(countrycode)) install.packages("countrycode")
-if (!require(R.cache)) install.packages("R.cache")
+### Comment: (HL) This code produces a cache'd file that is then used in ui.R and server.R to render the RShiny app; 
+###           To foreclose this code from public visibility in the GitHub repos, it is placed in the git-ignore folders 
+###           But then the  p a t h s  u s e d   i n   t h i s   c o d e   n e e d   t o   b e  c h a n g e d  accordingly! 
 
+if (!require('RPostgreSQL')) install.packages("RPostgreSQL")
+if (!require('dplyr')) install.packages("dplyr")
+if (!require('countrycode')) install.packages("countrycode")
+if (!require('R.cache')) install.packages("R.cache")
+
+
+# Set path to local 'vaps-dashboard_public' directory 
 path <- "~/Documents/Humboldt/Electoral_Vulnerability/Projects/vaps-dashboard_public"
+
 if ( sub(".*/","",getwd()) != "vaps-dashboard_public" ) setwd(path) ## set path to vaps-dashboard_public here ##
 rm(path)
 
@@ -111,16 +118,17 @@ rm(path)
     # clean up
     rm(list=(ls()[grepl("ccv.*",ls())]))
 
-  #   
-    allPCDBObjects <- lapply(ls(.GlobalEnv, all.names = F), function(o) get(o, envir = .GlobalEnv)) 
+# (5) Cache list with all objects required for webpages with key=list("PCDB", "data")
+  allPCDBObjects <- lapply(ls(.GlobalEnv, all.names = F), function(o) get(o, envir = .GlobalEnv)) 
 
-    names(allPCDBObjects) <- ls(.GlobalEnv, all.names = F)[!grepl("allPCDBObjects",ls())]
-    class(allPCDBObjects)
-    str(allPCDBObjects)
+  names(allPCDBObjects) <- ls(.GlobalEnv, all.names = F)[!grepl("allPCDBObjects",ls())]
+  class(allPCDBObjects)
+  str(allPCDBObjects)
 
-    if ( sub(".*/","",getwd()) == "vaps-dashboard_public" ) {
-      setCacheRootPath(path=getwd()) 
-      saveCache(allPCDBObjects, key=list("PCDB","data"))   
-    } else warning("Cannot cache list. Please setwd() or setCacheRootPath() to vaps-dashboard_public directory!")
-    rm(allPCDBObjects)
+  if ( sub(".*/","",getwd()) == "vaps-dashboard_public" ) {
+    setCacheRootPath(path=getwd()) 
+    saveCache(allPCDBObjects, key=list("PCDB","data"))   
+  } else warning("Cannot cache list. Please setwd() or setCacheRootPath() to vaps-dashboard_public directory!")
+  
+  rm(allPCDBObjects)
     
